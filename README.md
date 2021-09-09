@@ -2,15 +2,32 @@
   <img src="https://raw.githubusercontent.com/leonvol/magrad/master/docs/magrad_large.png">
 </p>
 
-This is magrad, a tensor autograd/machine learning framework written completely in Julia. 
-<br>
+[![Build Status](https://github.com/leonvol/Magrad/workflows/CI/badge.svg)](https://github.com/leonvol/Magrad/actions)
+[![Build Status](https://travis-ci.com/leonvol/Magrad.svg?branch=master)](https://travis-ci.com/leonvol/Magrad)
+[![Coverage](https://codecov.io/gh/leonvol/Magrad/branch/master/graph/badge.svg)](https://codecov.io/gh/leonvol/Magrad)
 
-This repo is in active development. I will gradually build the framework and start by implementing the most central piece, the Tensors and its ops on the CPU.
 
 
-## Why does this project exist
-I started this project because of multiple reasons:
+This is magrad, a tensor autograd/machine learning framework written completely in Julia.
 
-(1) Although there are ML/DL frameworks for Julia, some are not compatible with the newest Julia language standard (see [Mocha.jl](https://github.com/pluskid/Mocha.jl)), are only wrappers for the Julia language (see [tensorflow.jl](https://github.com/malmaud/TensorFlow.jl)) or are simply relatively large and complex and/or not very flexible and extensible. magrad aims to solve this problem.
+Although the magrad project follows the typical Julia package structure, it is not named Magrad.jl as it should not be confused as an officially registered package.
 
-(2) Additionally, my mathematical understanding of the general ML/DL learning process should be hardened by implementing important algorithms myself. Possibly this could serve as a learning resource for people seeking an ML process explanation with code. 
+# documentation
+Every critical piece of code has a comment attached, describing its function and design decisions.
+
+# installation
+```
+using Pkg
+Pkg.add("https://github.com/leonvol/Magrad.git")
+```
+
+# usage
+```
+# will follow later 
+```
+
+# running tests locally
+Make sure to have activated the magrad environment
+```
+include("test/runtests.jl")
+```
