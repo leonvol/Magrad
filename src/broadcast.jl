@@ -1,13 +1,14 @@
-import Base.Broadcast: Broadcasted, ArrayStyle
+include("util.jl")
 
-# Custom BroadcastStlye for Tensors based on ArrayStyle broadcasting
-Base.BroadcastStyle(::Type{<:Tensor}) = Broadcast.ArrayStyle{Tensor}()
+import Base.Broadcast: BroadcastFunction
 
-# Actually method called on allocation of the broadcast result
-# Gradient calculation is currently only supported for the last broadcasted op
-# of a potentially larger computation graph
-function Base.similar(bc::Broadcasted{ArrayStyle{Tensor}}, ::Type{ElType}) where {ElType} 
-    operation = bc.f
-    previous_nodes = bc.args
-    Tensor(similar(zeros(bc.axes)), op=operation, prev=previous_nodes, broadcasted=true)
+# Function definition for every possible broadcast op involving a Tensor
+# Needed to keep track of computation for backward pass
+for (F, S) in ((Tensor, Tensor), (Tensor, Any), (Any, Tensor))
+    @eval begin
+        # Generic broadcast function for computations involving a Tensor
+        function Broadcast.broadcasted(op::Any, x::$F, y::$S)
+            Tensor(broadcast(op, data(x), data(y)), op=BroadcastFunction{typeof(op)}, prev=(x, y))
+        end
+    end
 end

@@ -16,7 +16,6 @@ This project is a work in progress.
 
 These are some goals for the future:
 - implement gradient tape to keep track of computation
-- fully support backward pass on broadcasted functions
 - implement optimizer (?)
 
 # workings of magrad & documentation
@@ -32,7 +31,7 @@ Every critical piece of code has a comment attached, describing its function and
 | `tensor.jl` | implementation of the Tensor type, includes all of the following files to expose all the needed functionality to the user |
 | `ops.jl` | implementation of the currently supported operations like +, -, matmul of the Tensor type|
 | `grad.jl` | dispatched methods to calculate gradients |
-| `broadcast.jl` | methods to support broadcasting for the `Tensor` type, not finished yet, broadcasting is not fully supported for the gradient calculation step |
+| `broadcast.jl` | methods to support broadcasting for the `Tensor` type |
 
 # usage
 magrad is easy to use and can prepare you for working with bigger frameworks like PyTorch. Here a small showcase of the basic functionality: 

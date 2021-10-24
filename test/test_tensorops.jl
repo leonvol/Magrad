@@ -223,7 +223,7 @@ end
     d = Tensor(4one)
     res0 = a .* b
     res1 = c .* d
-    res = res0 .* res1
+    res = (a .* b) .* (c .* d)
 
     backward(res)
     @test a.grad .- 24 == zero && b.grad .- 12 == zero && c.grad .- 8 == zero && d.grad .- 6 == zero
