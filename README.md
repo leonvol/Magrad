@@ -12,7 +12,9 @@ This is magrad, a tensor autograd/machine learning framework written completely 
 Although the magrad project follows the typical Julia package structure, it is not named Magrad.jl as it should not be confused as an officially registered package.
 
 # status of the project
-This project is a work in progress.
+This project is a work in progress. Currently magrad provides the following functionalities:
+- Tensor type
+- full backprop support for basic and broadcast/per-element ops
 
 These are some goals for the future:
 - implement gradient tape to keep track of computation
@@ -28,19 +30,26 @@ Every critical piece of code has a comment attached, describing its function and
 | file name | function |
 | ----------| ---------|
 | `Magrad.jl` | magrad library, includes `tensor.jl` |
-| `tensor.jl` | implementation of the Tensor type, includes all of the following files to expose all the needed functionality to the user |
-| `ops.jl` | implementation of the currently supported operations like +, -, matmul of the Tensor type|
-| `grad.jl` | dispatched methods to calculate gradients |
+| `tensor.jl` | implementation of the `Tensor` type, includes all of the following files to expose all the needed functionality to the user |
+| `ops.jl` | implementation of the currently supported operations like `+`, `-`, matmul (`*`) of the `Tensor` type|
+| `grad.jl` | methods to calculate gradients for each supported op |
 | `broadcast.jl` | methods to support broadcasting for the `Tensor` type |
 
-# usage
-magrad is easy to use and can prepare you for working with bigger frameworks like PyTorch. Here a small showcase of the basic functionality: 
+# installation
 ```
-using Magrad: Tensor, backward
+using Pkg
+Pkg.add(url="https://github.com/leonvol/magrad")
+```
+
+# usage
+magrad is easy to use and can prepare you for working with bigger frameworks like PyTorch. Here a small showcase of the basic functionality (but more complicated computations are fully supported, too): 
+```
+using Magrad: Tensor, backward!
 
 a = Tensor(ones(3,3))
-res = 3 .* a # supports +,-,*,.+,.-,.*
-backward(res) # a.grad = [3 3 3; 3 3 3; 3 3 3]
+# supports following ops: +, -, *, .+, .-, .*
+res = 3 .* a 
+backward!(res) # a.grad = [3 3 3; 3 3 3; 3 3 3]
 ```
 
 # testing
