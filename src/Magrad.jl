@@ -1,6 +1,6 @@
 module Magrad
 
-export Tensor, backward
+export Tensor, backward!
 
 include("tensor.jl")
 
