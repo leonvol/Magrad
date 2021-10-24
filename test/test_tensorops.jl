@@ -225,7 +225,7 @@ end
     res1 = c .* d
     res = (a .* b) .* (c .* d)
 
-    backward(res)
+    backward!(res)
     @test a.grad .- 24 == zero && b.grad .- 12 == zero && c.grad .- 8 == zero && d.grad .- 6 == zero
 
     
@@ -244,7 +244,7 @@ end
     abcdef = abc .* def_
     abcdefg = abcdef * g
     
-    backward(abcdefg)
+    backward!(abcdefg)
 
     @test a.grad .+ 9 == zero && 
             b.grad .+ 9 == zero && 
@@ -260,7 +260,7 @@ end
 
     res = t0 * t1
 
-    backward(res)
+    backward!(res)
     #= 
     t0.grad 6.0  15.0  24.0
             6.0  15.0  24.0

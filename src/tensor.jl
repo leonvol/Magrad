@@ -43,7 +43,7 @@ include("ops.jl")
 include("grad.jl")
 include("broadcast.jl")
 
-function backward(t::Tensor, result::Bool=true)
+function backward!(t::Tensor, result::Bool=true)
     # End condition
     # No previous nodes, backward computation ends here
     if t.prev == ()
@@ -55,12 +55,12 @@ function backward(t::Tensor, result::Bool=true)
         t.grad = ones(size(t))
     end
 
-    calculategrad(t.op, t.prev[1], t.prev[2], t)
+    calculategrad!(t.op, t.prev[1], t.prev[2], t)
     
     # traverse computation graph in reverse order
-    backward(t.prev[1], false)
-    backward(t.prev[2], false)
+    backward!(t.prev[1], false)
+    backward!(t.prev[2], false)
 end
 
 # Gradient of this node should not/cannot be determined
-function backward(t::Any, result::Bool) end
+function backward!(t::Any, result::Bool) end
