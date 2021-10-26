@@ -3,7 +3,7 @@
 </p>
 
 
-[![Build Status](https://travis-ci.com/leonvol/Magrad.svg?branch=master)](https://travis-ci.com/leonvol/Magrad)
+[![Build Status](https://travis-ci.com/leonvol/Magrad.svg?branch=master)](https://app.travis-ci.com/github/leonvol/Magrad)
 [![Coverage](https://codecov.io/gh/leonvol/Magrad/branch/master/graph/badge.svg)](https://codecov.io/gh/leonvol/Magrad)
 
 
@@ -46,10 +46,14 @@ magrad is easy to use and can prepare you for working with bigger frameworks lik
 ```
 using Magrad: Tensor, backward!
 
-a = Tensor(ones(3,3))
-# supports following ops: +, -, *, .+, .-, .*
-res = 3 .* a 
-backward!(res) # a.grad = [3 3 3; 3 3 3; 3 3 3]
+a = Tensor(ones(5, 5))
+b = Tensor(ones(1, 5))
+
+res = (3 .* b) * (3 .* (a + a)) .* 4
+
+backward!(res)
+# a.grad = 5x5 matrix of 72s
+# b.grad = [360, 360, 360, 360, 360]
 ```
 
 # testing
